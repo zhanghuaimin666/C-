@@ -674,6 +674,7 @@ else {
     run(f2,a,2);*/
 
     printf("Hello world");
+    printf("what!");
 
     return 0;
 }
