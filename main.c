@@ -664,13 +664,16 @@ else {
     listNode(list);
     Node *reverse = reverseList(list);
     listNode(reverse);*/;
-    int i;
-    double a[MAXN]; /* 存储多项式的系数 */
+
+    /*int i;
+    double a[MAXN]; /* 存储多项式的系数 #1#
     a[0]=1;
     for(i=1;i<MAXN;i++)
         a[i]=(double)(1.0/i);
     run(f1,a,1);
-    run(f2,a,2);
+    run(f2,a,2);*/
+
+    printf("Hello world");
 
     return 0;
 }
