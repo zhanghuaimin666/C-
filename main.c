@@ -536,13 +536,22 @@ void showList(Node *L) {
 }*/
 
 //栈
-typedef struct {
-    ElemType data;
+/*typedef struct {
+    ElemType data[MAXSIZE];
+    int top;
+} Stack;
+
+void initStack(Stack *s) {
+    s->top = -1;
+}*/
+
+/*typedef struct {
+    ElemType *data;
     int top; //栈顶的数组下标
 } Stack;
 
 Stack *initStack() {
-    Stack *s = (Stack *) malloc(sizeof(Stack));;
+    Stack *s = (Stack *) malloc(sizeof(Stack));
     s->data = (ElemType *) malloc(sizeof(ElemType) * MAXSIZE);
     s->top = -1;
     return s;
@@ -584,7 +593,120 @@ int getTop(Stack *s, ElemType *e) {
     }
     *e = s->data[s->top];
     return 1;
+}*/
+
+/*typedef struct stack {
+    ElemType data;
+    struct stack *next;
+} Stack;
+
+Stack *initStack() {
+    Stack *s = (Stack *) malloc(sizeof(Stack));
+    s->data = 0;
+    s->next = NULL;
+    return s;
 }
+
+//判断栈是否为空
+int isEmpty(Stack *s) {
+    return s->next == NULL;
+}
+
+int push(Stack *s, ElemType e) {
+    Stack *p = (Stack *) malloc(sizeof(Stack));
+    p->data = e;
+    p->next = s->next;
+    s->next = p;
+    return 1;
+}
+
+int pop(Stack *s, ElemType *e) {
+    if (s->next == NULL) {
+        printf("空的\n");
+        return 0;
+    }
+    *e = s->next->data;
+    Stack *p = s->next;
+    s->next = p->next;
+    free(p);
+    return 1;
+}
+
+int getTop(Stack *s, ElemType *e) {
+    if (s->next == NULL) {
+        printf("空的\n");
+        return 0;
+    }
+    *e = s->next->data;
+    return 1;
+}*/
+
+//队列
+typedef struct {
+    ElemType data[MAXSIZE];
+    int front;
+    int rear;
+} Queue;
+
+void initQueue(Queue *Q) {
+    Q->front = 0;
+    Q->rear = 0;
+}
+
+int isEmpty(Queue *Q) {
+    if (Q->front == Q->rear) {
+        printf("空的\n");
+        return 1;
+    } else {
+        return 0;
+    }
+}
+
+ElemType deQueue(Queue *Q) {
+    if (Q->front == Q->rear) {
+        printf("空的\n");
+        return 0;
+    }
+    ElemType e = Q->data[Q->front];
+    Q->front++;
+    return e;
+}
+
+int queueFull(Queue *Q) {
+    if (Q->front > 0) {
+        int step = Q->front;
+        for (int i = Q->front; i <= Q->rear; i++) {
+            Q->data[i - step] = Q->data[i];
+        }
+        Q->front = 0;
+        Q->rear -= step;
+        return 1;
+    } else {
+        printf("真的满了\n");
+        return 0;
+    }
+}
+
+int eQueue(Queue *Q, ElemType e) {
+    if (Q->rear >= MAXSIZE) {
+        if (!queueFull(Q)) {
+            return 0;
+        }
+    }
+    Q->data[Q->rear] = e;
+    Q->rear++;
+    return 1;
+}
+
+int getHead(Queue *Q,ElemType *e) {
+    if (Q->front==Q->rear) {
+        printf("满的\n");
+        return 0;
+    }
+    *e=Q->data[Q->front];
+    return 1;
+}
+
 
 int main(void) {
     /*
@@ -978,23 +1100,51 @@ else {
     deleteNode(list1,2);
     showList(list1);*/
 
-    //栈和队列
-    //栈(stack):限定仅在表尾进行插入和删除操作的线性表(先进后出)
-    //尾端:栈顶
-    //头端:栈底
-    //操作:进栈(插入),出栈(删除最后插入的元素)
-    Stack s;
-    initStack(&s);
-    push(&s, 10);
-    push(&s, 20);
-    push(&s, 30);
-    push(&s, 40);
-    push(&s, 50);
+    /*栈和队列
+    栈(stack):限定仅在表尾进行插入和删除操作的线性表(先进后出)
+    尾端:栈顶
+    头端:栈底
+    操作:进栈(插入),出栈(删除最后插入的元素)*/
+    /*Stack *s = initStack();
+    push(s, 10);
+    push(s, 20);
+    push(s, 30);
+    push(s, 40);
+    push(s, 50);
     ElemType e;
-    pop(&s, &e);
+    pop(s, &e);
     printf("删去的元素是:%d\n", e);
-    getTop(&s, &e);
-    printf("栈顶元素是:%d\n", e);
+
+    getTop(s, &e);
+    printf("栈顶元素是:%d\n", e);*/
+    /*Stack *s = initStack();
+    push(s, 10);
+    push(s, 20);
+    push(s, 30);
+
+    ElemType e;
+    pop(s, &e);
+    printf("%d\n", e);
+
+    getTop(s, &e);
+    printf("%d\n", e);
+    */
+
+    //队列(queue)先进先出first in first out(FIFO)
+    //允许插入的一端称为队尾(rear),允许删除的一端称为队头(front)
+    Queue q;
+    initQueue(&q);
+    eQueue(&q,10);
+    eQueue(&q,20);
+    eQueue(&q,30);
+    eQueue(&q,40);
+    eQueue(&q,50);
+
+    printf("%d\n",deQueue(&q));
+    printf("%d\n",deQueue(&q));
+    ElemType e;
+    getHead(&q,&e);
+    printf("%d\n",e);
 
     return 0;
 }
