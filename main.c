@@ -535,6 +535,45 @@ void showList(Node *L) {
     printf("\n");
 }*/
 
+//栈
+typedef struct {
+    ElemType data[MAXSIZE];
+    int top; //栈顶的数组下标
+} Stack;
+
+void initStack(Stack *s) {
+    s->top = -1; //0的前一个下标
+}
+
+int isEmpty(Stack *s) {
+    if (s->top == -1) {
+        printf("空的\n");
+        return 1;
+    } else {
+        return 0;
+    }
+}
+
+int push(Stack *s, ElemType e) {
+    if (s->top >= MAXSIZE - 1) {
+        printf("满了\n");
+        return 0;
+    }
+    s->top++;
+    s->data[s->top] = e;
+    return 1;
+}
+
+ElemType pop(Stack *s, ElemType *e) {
+    if (s->top == -1) {
+        printf("空的\n");
+        return 0;
+    }
+    *e = s->data[s->top];
+    s->top--;
+    return *e;
+}
+
 int main(void) {
     /*
 int a, b;
@@ -926,6 +965,12 @@ else {
     showList(list1);
     deleteNode(list1,2);
     showList(list1);*/
+
+    //栈和队列
+    //栈(stack):限定仅在表尾进行插入和删除操作的线性表(先进后出)
+    //尾端:栈顶
+    //头端:栈底
+    //操作:进栈(插入),出栈(删除最后插入的元素)
 
 
     return 0;
