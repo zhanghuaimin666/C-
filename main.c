@@ -6,9 +6,10 @@
 
 #define MAXN 101  /* 多项式最大项数，即多项式次数+1*/
 #define MAXK 1e5 /* 被测函数最大重复调用次数*/
+#define MAXSIZE 100
+typedef int ElemType;
 
-
-int judgerpnm(int year) {
+/*int judgerpnm(int year) {
     if ((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0)) {
         return 1;
     }
@@ -65,15 +66,14 @@ void method(int *p, int size) {
     printf("\n");
 }
 
-#define MAXSIZE 100
-typedef int ElemType;
 
 struct book {
     int isbn;
     char bookName[20];
     double price;
-};
+};*/
 
+//顺序表
 /*typedef struct {
     ElemType *data;
     int length;
@@ -139,6 +139,7 @@ int findElem(Seqlist *L, ElemType e) {
     return 0;
 }*/
 
+//单向链表和环
 /*typedef struct node {
     ElemType data;
     struct node *next;
@@ -443,7 +444,8 @@ void run(double (*f)(int n, double *, double), double a[], int func_n) {
     printf("duration%d=%6.2e\n", func_n, duration);
 }*/
 
-typedef struct node {
+//双向链表
+/*typedef struct node {
     ElemType data;
     struct node *next, *prev;
 } Node;
@@ -506,6 +508,24 @@ int insertNode(Node *L, ElemType e, int pos) {
     return 1;
 }
 
+int deleteNode(Node *L, int pos) {
+    Node *p = L;
+    for (int i = 0; i < pos - 1; i++) {
+        p = p->next;
+        if (p == NULL) {
+            return 0;
+        }
+    }
+    if (p->next == NULL) {
+        return 0;
+    }
+    Node *q = p->next;
+    p->next=q->next;
+    q->next->prev=p;
+    free(q);
+    return 1;
+}
+
 void showList(Node *L) {
     Node *p = L->next;
     while (p != NULL) {
@@ -513,7 +533,7 @@ void showList(Node *L) {
         p = p->next;
     }
     printf("\n");
-}
+}*/
 
 int main(void) {
     /*
@@ -758,6 +778,7 @@ else {
     顺序表:用一组连续的内存单元依次存储线性表的各个元素
     也就是说逻辑上相邻的元素,物理存储空间也是连续的*/
 
+    //顺序表的基本操作
     /*Seqlist *list1 = initList();
     printf("初始化成功,目前长度占用%d\n", list1->length);
     printf("目前占用内存%zu字节\n", sizeof(list1->data));
@@ -775,6 +796,7 @@ else {
     printf("%d\n", findElem(list1, 43));
     free(list1);*/
 
+    //头插法
     /*Node *list = initList();
     insertHead(list, 10);
     insertHead(list, 20);
@@ -790,6 +812,7 @@ else {
     freeList(list);
     printf("%d\n", listLength(list));*/
 
+    //尾插法
     /*Node *list = initList();
     Node *tail = get_tail(list);
     tail = insertTail(tail, 10);
@@ -802,6 +825,7 @@ else {
     listNode(list);
     findNodeFS(list, 3);*/
 
+    //删除链表中所有值为e的节点
     /*Node *list = initList();
     Node *tail = get_tail(list);
     tail = insertTail(tail, 21);
@@ -813,6 +837,7 @@ else {
     removeNode(list,21);
     listNode(list->next);*/
 
+    //反转链表
     /*Node *list = initList();;
     Node *tail = get_tail(list);
     tail = insertTail(tail, 10);
@@ -826,6 +851,7 @@ else {
     Node *reverse = reverseList(list);
     listNode(reverse);*/
 
+    //重新排序链表
     /*Node *list = initList();
     Node *tail = get_tail(list);
     tail = insertTail(tail, 10);
@@ -840,6 +866,7 @@ else {
     reOrderList(list);
     listNode(list);*/
 
+    //判断是否有环
     /*Node *list = initList();
     Node *tail = get_tail(list);
     tail = insertTail(tail, 1);
@@ -859,6 +886,7 @@ else {
         printf("没环");
     }*/
 
+    //找到环的入口
     /*Node *list = initList();
     Node *tail = get_tail(list);
     tail = insertTail(tail, 1);
@@ -874,7 +902,6 @@ else {
     Node *entry=findEntry(list);
     printf("%d\n",entry->data);*/
 
-
     /*int i;
     double a[MAXN]; /* 存储多项式的系数 #1#
     a[0]=1;
@@ -883,7 +910,8 @@ else {
     run(f1,a,1);
     run(f2,a,2);*/
 
-    Node *list1 = initNode();
+    //双向链表
+    /*Node *list1 = initNode();
     insertHead(list1, 10);
     insertHead(list1, 20);
     insertHead(list1, 30);
@@ -894,7 +922,11 @@ else {
     insertTail(list1, 60);
     insertTail(list1, 70);
     showList(list1);
-    insertNode(list1,100,4);
+    insertNode(list1, 100, 4);
     showList(list1);
+    deleteNode(list1,2);
+    showList(list1);*/
+
+
     return 0;
 }
