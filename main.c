@@ -537,12 +537,15 @@ void showList(Node *L) {
 
 //栈
 typedef struct {
-    ElemType data[MAXSIZE];
+    ElemType data;
     int top; //栈顶的数组下标
 } Stack;
 
-void initStack(Stack *s) {
-    s->top = -1; //0的前一个下标
+Stack *initStack() {
+    Stack *s = (Stack *) malloc(sizeof(Stack));;
+    s->data = (ElemType *) malloc(sizeof(ElemType) * MAXSIZE);
+    s->top = -1;
+    return s;
 }
 
 int isEmpty(Stack *s) {
@@ -572,6 +575,15 @@ ElemType pop(Stack *s, ElemType *e) {
     *e = s->data[s->top];
     s->top--;
     return *e;
+}
+
+int getTop(Stack *s, ElemType *e) {
+    if (s->top == -1) {
+        printf("空的\n");
+        return 0;
+    }
+    *e = s->data[s->top];
+    return 1;
 }
 
 int main(void) {
@@ -971,7 +983,18 @@ else {
     //尾端:栈顶
     //头端:栈底
     //操作:进栈(插入),出栈(删除最后插入的元素)
-
+    Stack s;
+    initStack(&s);
+    push(&s, 10);
+    push(&s, 20);
+    push(&s, 30);
+    push(&s, 40);
+    push(&s, 50);
+    ElemType e;
+    pop(&s, &e);
+    printf("删去的元素是:%d\n", e);
+    getTop(&s, &e);
+    printf("栈顶元素是:%d\n", e);
 
     return 0;
 }
