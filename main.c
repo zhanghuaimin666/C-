@@ -741,6 +741,15 @@ int dequeue(Queue *Q, ElemType *e) {
     return 1;
 }
 
+int getHead(Queue *Q,ElemType *e) {
+    if (Q->front==Q->rear) {
+        printf("¿ÕµÄ\n");
+        return 0;
+    }
+    *e=Q->data[Q->front];
+    return 1;
+}
+
 int main(void) {
     /*
 int a, b;
@@ -1178,6 +1187,23 @@ else {
     ElemType e;
     getHead(&q,&e);
     printf("%d\n",e);*/
+
+    Queue *q=initQueue();
+
+    equeue(q,10);
+    equeue(q,20);
+    equeue(q,30);
+    equeue(q,40);
+    equeue(q,50);
+
+    ElemType e;
+    dequeue(q,&e);
+    printf("%d\n",e);
+    dequeue(q,&e);
+    printf("%d\n",e);
+
+    getHead(q,&e);
+    printf("%d\n",e);
 
 
     return 0;
