@@ -751,7 +751,7 @@ int getHead(Queue *Q,ElemType *e) {
     return 1;
 }*/
 
-//队列的链式结构
+/*队列的链式结构
 typedef struct QueueNode {
     ElemType data;
     struct QueueNode *next;
@@ -800,6 +800,17 @@ ElemType getFront(Queue *q) {
         return 0;
     }
     return q->front->next->data;
+}*/
+
+//递归
+int fun(int n) {
+    if (n == 1) return 1;
+    else return fun(n - 1) + n;
+}
+
+int Fibonacci(int n) {
+    if (n == 1 || n == 2) return 1;
+    else return Fibonacci(n - 1) + Fibonacci(n - 2);
 }
 
 int main(void) {
@@ -1036,8 +1047,7 @@ else {
             }
         }
     }
-    printf("%d\n", x);*/
-
+    printf("%d\n", x);*
     /*数据结构
     1.线性表:分成 列表和链表
     定义:由n个数据特性相同的元素构成的有限序列(n个相同数据类型的)
@@ -1199,6 +1209,7 @@ else {
     尾端:栈顶
     头端:栈底
     操作:进栈(插入),出栈(删除最后插入的元素)*/
+
     /*Stack *s = initStack();
     push(s, 10);
     push(s, 20);
@@ -1211,6 +1222,7 @@ else {
 
     getTop(s, &e);
     printf("栈顶元素是:%d\n", e);*/
+
     /*Stack *s = initStack();
     push(s, 10);
     push(s, 20);
@@ -1224,9 +1236,9 @@ else {
     printf("%d\n", e);
     */
 
-    //队列(queue)先进先出first in first out(FIFO)
-    //允许插入的一端称为队尾(rear),允许删除的一端称为队头(front)
-    /*Queue q;
+    /*队列(queue)先进先出first in first out(FIFO)
+    允许插入的一端称为队尾(rear),允许删除的一端称为队头(front)
+    Queue q;
     initQueue(&q);
     eQueue(&q,10);
     eQueue(&q,20);
@@ -1238,9 +1250,9 @@ else {
     printf("%d\n",deQueue(&q));
     ElemType e;
     getHead(&q,&e);
-    printf("%d\n",e);*/
+    printf("%d\n",e);
 
-    /*Queue *q=initQueue();
+    Queue *q=initQueue();
 
     equeue(q,10);
     equeue(q,20);
@@ -1255,9 +1267,9 @@ else {
     printf("%d\n",e);
 
     getHead(q,&e);
-    printf("%d\n",e);*/
+    printf("%d\n",e);
 
-    /*Queue *q=initQueue();
+    Queue *q=initQueue();
     equeue(q,10);
     equeue(q,20);
     equeue(q,30);
@@ -1270,6 +1282,6 @@ else {
     printf("出队%d\n",e);
     printf("%d\n",getFront(q));*/
 
-
+    printf("%d\n",Fibonacci(30));
     return 0;
 }
