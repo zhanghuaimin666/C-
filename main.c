@@ -642,7 +642,7 @@ int getTop(Stack *s, ElemType *e) {
 }*/
 
 //队列
-typedef struct {
+/*typedef struct {
     ElemType data[MAXSIZE];
     int front;
     int rear;
@@ -705,8 +705,41 @@ int getHead(Queue *Q,ElemType *e) {
     }
     *e=Q->data[Q->front];
     return 1;
+}*/
+
+typedef struct {
+    ElemType *data;
+    int front;
+    int rear;
+} Queue;
+
+Queue *initQueue() {
+    Queue *q = (Queue *) malloc(sizeof(Queue));
+    q->data = (ElemType *) malloc(sizeof(ElemType) * MAXSIZE);
+    q->front = 0;
+    q->rear = 0;
+    return q;
 }
 
+int equeue(Queue *Q, ElemType e) {
+    if ((Q->rear + 1) % MAXSIZE == Q->front) {
+        printf("满了\n");
+        return 0;
+    }
+    Q->data[Q->rear] = e;
+    Q->rear = (Q->rear + 1) % MAXSIZE;
+    return 1;
+}
+
+int dequeue(Queue *Q, ElemType *e) {
+    if (Q->front == Q->rear) {
+        printf("空的\n");
+        return 0;
+    }
+    *e = Q->data[Q->front];
+    Q->front = (Q->front + 1) % MAXSIZE;
+    return 1;
+}
 
 int main(void) {
     /*
@@ -1132,7 +1165,7 @@ else {
 
     //队列(queue)先进先出first in first out(FIFO)
     //允许插入的一端称为队尾(rear),允许删除的一端称为队头(front)
-    Queue q;
+    /*Queue q;
     initQueue(&q);
     eQueue(&q,10);
     eQueue(&q,20);
@@ -1144,7 +1177,8 @@ else {
     printf("%d\n",deQueue(&q));
     ElemType e;
     getHead(&q,&e);
-    printf("%d\n",e);
+    printf("%d\n",e);*/
+
 
     return 0;
 }
