@@ -545,7 +545,7 @@ void initStack(Stack *s) {
     s->top = -1;
 }*/
 
-/*typedef struct {
+typedef struct {
     ElemType *data;
     int top; //栈顶的数组下标
 } Stack;
@@ -576,14 +576,14 @@ int push(Stack *s, ElemType e) {
     return 1;
 }
 
-ElemType pop(Stack *s, ElemType *e) {
+int pop(Stack *s, ElemType *e) {
     if (s->top == -1) {
         printf("空的\n");
         return 0;
     }
     *e = s->data[s->top];
     s->top--;
-    return *e;
+    return 1;
 }
 
 int getTop(Stack *s, ElemType *e) {
@@ -593,7 +593,7 @@ int getTop(Stack *s, ElemType *e) {
     }
     *e = s->data[s->top];
     return 1;
-}*/
+}
 
 /*typedef struct stack {
     ElemType data;
@@ -821,6 +821,134 @@ typedef enum weekday {
 typedef enum bool {
     false, true
 } bool;
+
+typedef enum {
+    LEFT_PARE, RIGHT_PARE,
+    ADD, SUB, MUL, DIV, MOD,
+    EOS, NUM
+} contentType;
+
+char expr[] = "x/(i-j)*y";
+
+contentType getToken(char *symbol, int *index) {
+    *symbol = expr[*index];
+    *index = *index + 1;
+    switch (*symbol) {
+        case'(':
+            return LEFT_PARE;
+        case ')':
+            return RIGHT_PARE;
+        case '+':
+            return ADD;
+        case '-':
+            return SUB;
+        case '*':
+            return MUL;
+        case '/':
+            return DIV;
+        case '%':
+            return MOD;
+        case '\0':
+            return EOS;
+        default:
+            return NUM;
+    }
+}
+
+int evil(Stack *s) {
+    char symbol;
+    int op1, op2;
+    int index = 0;
+    contentType token;
+    token = getToken(&symbol, &index);
+    ElemType result;
+    while (token != EOS) {
+        if (token == NUM) {
+            push(s, symbol - '0');
+        } else {
+            pop(s, &op2);
+            pop(s, &op1);
+
+            switch (token) {
+                case ADD:
+                    push(s, op1 + op2);
+                    break;
+                case SUB:
+                    push(s, op1 - op2);
+                    break;
+                case MUL:
+                    push(s, op1 * op2);
+                    break;
+                case DIV:
+                    push(s, op1 / op2);
+                    break;
+                case MOD:
+                    push(s, op1 % op2);
+                    break;
+                default:
+                    break;
+            }
+        }
+        token = getToken(&symbol, &index);
+    }
+    pop(s, &result);
+    printf("%d\n", result);
+    return 1;
+}
+
+int print_token(contentType token) {
+    switch (token) {
+        case ADD:
+            printf("+");
+            break;
+        case SUB:
+            printf("-");
+            break;
+        case MUL:
+            printf("*");
+            break;
+        case DIV:
+            printf("/");
+            break;
+        case MOD:
+            printf("%%");
+            break;
+        default:
+            return 0;
+    }
+    return 1;
+}
+
+void postfix(Stack *s) {
+    int in_stack[] = {0, 19, 12, 12, 13, 13, 13, 0};
+    int out_stack[] = {20, 19, 12, 12, 13, 13, 13, 0};
+    contentType token;
+    int index=0;
+    s->data[0]=EOS;
+    char symbol;
+    ElemType e;
+    token=getToken(&symbol,&index);
+    while (token!=EOS) {
+        if (token==NUM) {
+            printf("%c",symbol);
+        }
+        else if (token==RIGHT_PARE) {
+            while (s->data[s->top]!=LEFT_PARE) {
+                pop(s,&e);
+                print_token(e);
+            }
+            pop(s,&e);
+        }
+        else {
+            while (in_stack[s->data[s->top]]>=out_stack[token]) {
+                pop(s,&e);
+                print_token(e);
+            }
+            push(s,token);
+        }
+        token=getToken(&symbol,&index);
+    }
+}
 
 int main(void) {
     /*
@@ -1293,12 +1421,19 @@ else {
 
     //printf("%d\n",Fibonacci(30));
 
-    enum weekday a;
+    /*enum weekday a;
     a = mon;
     weekday b;
     b = tue;
     printf("%d\n", a);
-    printf("%d\n", b);
+    printf("%d\n", b);*/
+
+    /*Stack *s = initStack();
+    evil(s);*/
+
+    Stack *s=initStack();
+    printf("%s\n",expr);
+    postfix(s);
 
     return 0;
 }
