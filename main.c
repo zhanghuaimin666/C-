@@ -802,7 +802,7 @@ ElemType getFront(Queue *q) {
     return q->front->next->data;
 }*/
 
-//µÝ¹é
+/*//µÝ¹é
 int fun(int n) {
     if (n == 1) return 1;
     else return fun(n - 1) + n;
@@ -811,7 +811,16 @@ int fun(int n) {
 int Fibonacci(int n) {
     if (n == 1 || n == 2) return 1;
     else return Fibonacci(n - 1) + Fibonacci(n - 2);
-}
+}*/
+
+//Ã¶¾Ù
+typedef enum weekday {
+    mon = 1, tue, wed, thu, fri, sat, sun
+} weekday;
+
+typedef enum bool {
+    false, true
+} bool;
 
 int main(void) {
     /*
@@ -1282,6 +1291,14 @@ else {
     printf("³ö¶Ó%d\n",e);
     printf("%d\n",getFront(q));*/
 
-    printf("%d\n",Fibonacci(30));
+    //printf("%d\n",Fibonacci(30));
+
+    enum weekday a;
+    a = mon;
+    weekday b;
+    b = tue;
+    printf("%d\n", a);
+    printf("%d\n", b);
+
     return 0;
 }
