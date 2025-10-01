@@ -545,7 +545,7 @@ void initStack(Stack *s) {
     s->top = -1;
 }*/
 
-typedef struct {
+/*typedef struct {
     ElemType *data;
     int top; //栈顶的数组下标
 } Stack;
@@ -559,7 +559,6 @@ Stack *initStack() {
 
 int isEmpty(Stack *s) {
     if (s->top == -1) {
-        printf("空的\n");
         return 1;
     } else {
         return 0;
@@ -593,7 +592,7 @@ int getTop(Stack *s, ElemType *e) {
     }
     *e = s->data[s->top];
     return 1;
-}
+}*/
 
 /*typedef struct stack {
     ElemType data;
@@ -813,7 +812,7 @@ int Fibonacci(int n) {
     else return Fibonacci(n - 1) + Fibonacci(n - 2);
 }*/
 
-//枚举
+/*//枚举
 typedef enum weekday {
     mon = 1, tue, wed, thu, fri, sat, sun
 } weekday;
@@ -922,33 +921,37 @@ int print_token(contentType token) {
 void postfix(Stack *s) {
     int in_stack[] = {0, 19, 12, 12, 13, 13, 13, 0};
     int out_stack[] = {20, 19, 12, 12, 13, 13, 13, 0};
+
     contentType token;
-    int index=0;
-    s->data[0]=EOS;
+    int index = 0;
+    push(s, EOS);
     char symbol;
     ElemType e;
-    token=getToken(&symbol,&index);
-    while (token!=EOS) {
-        if (token==NUM) {
-            printf("%c",symbol);
-        }
-        else if (token==RIGHT_PARE) {
-            while (s->data[s->top]!=LEFT_PARE) {
-                pop(s,&e);
+    token = getToken(&symbol, &index);
+
+    while (token != EOS) {
+        if (token == NUM) {
+            printf("%c", symbol);
+        } else if (token == RIGHT_PARE) {
+            while (s->data[s->top] != LEFT_PARE) {
+                pop(s, &e);
                 print_token(e);
             }
-            pop(s,&e);
-        }
-        else {
-            while (in_stack[s->data[s->top]]>=out_stack[token]) {
-                pop(s,&e);
+            pop(s, &e);
+        } else {
+            while (in_stack[s->data[s->top]] >= out_stack[token]) {
+                pop(s, &e);
                 print_token(e);
             }
-            push(s,token);
+            push(s, token);
         }
-        token=getToken(&symbol,&index);
+        token = getToken(&symbol, &index);
     }
-}
+    while (!isEmpty(s)) {
+        pop(s,&e);
+        print_token(e);
+    }
+}*/
 
 int main(void) {
     /*
@@ -1431,9 +1434,10 @@ else {
     /*Stack *s = initStack();
     evil(s);*/
 
-    Stack *s=initStack();
-    printf("%s\n",expr);
-    postfix(s);
+    /*Stack *s = initStack();
+    printf("%s\n", expr);
+    postfix(s);*/
+
 
     return 0;
 }
