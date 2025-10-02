@@ -990,6 +990,26 @@ void preOrder(BiTree T) {
     preOrder(T->rchild);
 }
 
+//2.中序遍历
+void inOrder(BiTree T) {
+    if (T==NULL) {
+        return ;
+    }
+    inOrder(T->lchild);
+    printf("%c ",T->data);
+    inOrder(T->rchild);
+}
+
+//3.后序遍历
+void postOrder(BiTree T) {
+    if (T==NULL) {
+        return;
+    }
+    postOrder(T->lchild);
+    postOrder(T->rchild);
+    printf("%c ",T->data);
+}
+
 
 int main(void) {
     /*
@@ -1496,7 +1516,14 @@ else {
     5.如果2i+1<=n,则节点i有右子树,其右子树的编号为2i+1
     6.如果2i+1>n,则节点i无右子树
      */
-
+    BiTree T;
+    creatTree(&T);
+    preOrder(T);
+    printf("\n");
+    inOrder(T);
+    printf("\n");
+    postOrder(T);
+    printf("\n");
 
     return 0;
 }
