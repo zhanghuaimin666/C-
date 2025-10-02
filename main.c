@@ -6,8 +6,8 @@
 
 #define MAXN 101  /* 多项式最大项数，即多项式次数+1*/
 #define MAXK 1e5 /* 被测函数最大重复调用次数*/
-#define MAXSIZE 100
-typedef int ElemType;
+/*#define MAXSIZE 100
+typedef int ElemType;*/
 
 /*int judgerpnm(int year) {
     if ((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0)) {
@@ -953,6 +953,44 @@ void postfix(Stack *s) {
     }
 }*/
 
+typedef char ElemType;
+
+typedef struct TreeNode {
+    ElemType data;
+    struct TreeNode *lchild;
+    struct TreeNode *rchild;
+} TreeNode;
+
+typedef TreeNode *BiTree; //二叉树指针
+
+char str[] = "ABDH#K###E##CFI###G#J##";
+int idx = 0;
+
+void creatTree(BiTree *T) {
+    ElemType ch;
+    ch = str[idx++];
+    if (ch == '#') {
+        *T = NULL;
+    } else {
+        *T = (TreeNode *) malloc(sizeof(TreeNode));
+        (*T)->data = ch;
+        creatTree(&(*T)->lchild);
+        creatTree(&(*T)->rchild);
+    }
+}
+
+//二叉树的遍历:
+//1.前序遍历
+void preOrder(BiTree T) {
+    if (T == NULL) {
+        return;
+    }
+    printf("%c ", T->data);
+    preOrder(T->lchild);
+    preOrder(T->rchild);
+}
+
+
 int main(void) {
     /*
 int a, b;
@@ -1457,7 +1495,6 @@ else {
     4.如果2i>n,则节点i无左子树
     5.如果2i+1<=n,则节点i有右子树,其右子树的编号为2i+1
     6.如果2i+1>n,则节点i无右子树
-
      */
 
 
